@@ -1,0 +1,19 @@
+{{ form_start(form) }}
+        <div class="row">
+            <div class="col-md-4">{{ form_row(form.lastname) }}</div>
+            <div class="col-md-4">{{ form_row(form.firstname) }}</div>
+            <div class="col-md-4">{{ form_row(form.imageFile) }}</div>
+        </div>
+        <div class="row">
+            <div class="col-md-4">{{ form_row(form.sexe) }}</div>
+            <div class="col-md-4">{{ form_row(form.born) }}</div>
+            <div class="col-md-4">{{ form_row(form.town) }}</div>
+        </div>
+        <div class="row">
+            <div class="col-md-4">{{ form_row(form.email) }}</div>
+            <div class="col-md-4">{{ form_row(form.phone) }}</div>
+            <div class="col-md-4">{{ form_row(form.actif) }}</div>
+        </div>
+        {{ form_rest(form) }}
+        <button class="btn btn-primary">{{ button|default('Enregistrer') }}</button>
+        {{ form_end(form) }}

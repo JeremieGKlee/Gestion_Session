@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Rentrer un nouveau stagiaire{% endblock %}
+
+{% block body %}
+    
+    <div class="container mt-4">
+        <h1>Créer un nouveau stagiaire</h1>
+        {{ include ('stagiaire/_form.html.twig', {button: 'Créer'}) }}
+    </div>
+
+{% endblock %}

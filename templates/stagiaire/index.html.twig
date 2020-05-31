@@ -1,0 +1,60 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Gérer les stagiaires{% endblock %}
+
+{% block body %}
+    
+
+    <div class="container mt-4">
+
+        <h1>Gérer les stagiaires</h1>
+
+        {% for message in app.flashes('success') %}
+            <div class="alert alert-success">
+                {{ message }}
+            </div>
+        {% endfor %}
+
+        <table class="table table-stripped">
+            <thead>
+                <tr>
+                    <th>Photo</th>
+                    <th>Nom</th>
+                    <th>Prénom</th>
+                    <th>Compte Actif</th>
+                    <th>Actions</th>
+                    {# <th><a href="{{ path ('stagiaire.new') }}" class="btn btn-primary">Créer un nouveau stagiaire</a></th> #}
+                </tr>
+            </thead>
+            <tbody>
+            {% for stagiaire in stagiaires %}
+            <tr>
+                <td>
+                    {% if stagiaire.filename %}
+                        <img src="{{ vich_uploader_asset(stagiaire, 'imageFile') | imagine_filter('thumb') }}" alt="card-img-top" style="width: 50px; height:50px;">
+                    {% else %}
+                        <img src="{{ '/images/stagiaires/avatarDoe.png' | imagine_filter('thumb') }}" alt="card-img-top" style="width: 50px; height:50px;">
+                    {% endif %}
+                </td>
+                <td>{{ stagiaire.lastname }}</td>
+                <td>{{ stagiaire.firstname }}</td>
+                <td>{% if stagiaire.actif == 1  %} oui {% endif %}</td>
+                <td>
+                    <a href="{{ path ('stagiaire.edit', {id: stagiaire.id}) }}" class="btn btn-secondary">Editer</a>
+                    <form method="post" action="{{ path ('stagiaire.delete', {id: stagiaire.id}) }}" style="display: inline-block" onsubmit="return confirm('Vous êtes en train de supprimer un bien, êtes vous sûr?')">
+                        <input type="hidden" name="_method" value="DELETE">
+                        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ stagiaire.id) }}">
+                        <button class="btn btn-danger">Supprimer</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+        <div class="text-right">
+            <a href="{{ path ('stagiaire.new') }}" class="btn btn-primary">Créer un nouveau stagiaire</a>
+        </div>
+
+    </div>   
+{% endblock %}
