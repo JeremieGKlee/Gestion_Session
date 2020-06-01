@@ -22,7 +22,9 @@
                     <th>Nom</th>
                     <th>Prénom</th>
                     <th>Compte Actif</th>
+                    <th>Créé le</th>
                     <th>Actions</th>
+                    
                     {# <th><a href="{{ path ('stagiaire.new') }}" class="btn btn-primary">Créer un nouveau stagiaire</a></th> #}
                 </tr>
             </thead>
@@ -39,9 +41,12 @@
                 <td>{{ stagiaire.lastname }}</td>
                 <td>{{ stagiaire.firstname }}</td>
                 <td>{% if stagiaire.actif == 1  %} oui {% endif %}</td>
+                <td>{{ stagiaire.created_at | date('d/m/Y')  }}</td>
                 <td>
+                    <a href="{{ path('stagiaire.show', {id: stagiaire.id, slug: stagiaire.slug}) }}" class="btn btn-success">Consulter</a>
+                    {# <a href="{{ path('property.show', {id: property.id, slug: property.slug}) }}">{{ property.title }}</a> #}
                     <a href="{{ path ('stagiaire.edit', {id: stagiaire.id}) }}" class="btn btn-secondary">Editer</a>
-                    <form method="post" action="{{ path ('stagiaire.delete', {id: stagiaire.id}) }}" style="display: inline-block" onsubmit="return confirm('Vous êtes en train de supprimer un bien, êtes vous sûr?')">
+                    <form method="post" action="{{ path ('stagiaire.delete', {id: stagiaire.id}) }}" style="display: inline-block" onsubmit="return confirm('Vous êtes en train de supprimer un stagiaire, êtes vous sûr?')">
                         <input type="hidden" name="_method" value="DELETE">
                         <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ stagiaire.id) }}">
                         <button class="btn btn-danger">Supprimer</button>
@@ -55,6 +60,8 @@
         <div class="text-right">
             <a href="{{ path ('stagiaire.new') }}" class="btn btn-primary">Créer un nouveau stagiaire</a>
         </div>
-
+        <div class="d-flex justify-content-end">
+            <a href="{{ path ('accueil') }}" class="btn btn-secondary">Retour</a>
+        </div>
     </div>   
 {% endblock %}

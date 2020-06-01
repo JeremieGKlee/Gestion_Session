@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\StagiaireRepository;
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Cocur\Slugify\Slugify;
@@ -112,7 +113,6 @@ class Stagiaire
     public function __construct()
     {
         $this ->created_at = new \DateTime();
-        // $this->options = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -134,7 +134,7 @@ class Stagiaire
 
     public function getSlug(): string
     {
-        return -(new Slugify())->slugify($this->lastname);
+        return (new Slugify())->slugify($this->lastname);
     }
 
     public function getFirstname(): ?string
@@ -159,6 +159,11 @@ class Stagiaire
         $this->sexe = $sexe;
 
         return $this;
+    }
+
+    public function getSexeType(): string
+    {
+        return self::SEXE [$this->sexe];
     }
 
     public function getBorn(): ?\DateTimeInterface
@@ -302,4 +307,5 @@ class Stagiaire
 
         return $this;   
     }
+
 }

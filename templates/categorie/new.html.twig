@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Création d'une nouvelle catégorie{% endblock %}
+
+{% block body %}
+    
+    <div class="container mt-4">
+        <h1>Créer une nouvelle catégorie</h1>
+        {{ include ('categorie/_form.html.twig', {button: 'Créer'}) }}
+        <div class="d-flex justify-content-end">
+            <a href="{{ path ('categorie.index') }}" class="btn btn-secondary">Retour</a>
+        </div>
+    </div>
+
+{% endblock %}

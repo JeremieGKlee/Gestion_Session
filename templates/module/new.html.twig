@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Création d'un nouveau module{% endblock %}
+
+{% block body %}
+    
+    <div class="container mt-4">
+        <h1>Créer un nouveau module</h1>
+        {{ include ('module/_form.html.twig', {button: 'Créer'}) }}
+        <div class="d-flex justify-content-end">
+            <a href="{{ path ('module.index') }}" class="btn btn-secondary">Retour</a>
+        </div>
+    </div>
+
+{% endblock %}

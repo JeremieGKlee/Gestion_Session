@@ -1,0 +1,51 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Gérer les catégories{% endblock %}
+
+{% block body %}
+    
+
+    <div class="container mt-4">
+
+        <h1>Gérer les catégories</h1>
+
+        {% for message in app.flashes('success') %}
+            <div class="alert alert-success">
+                {{ message }}
+            </div>
+        {% endfor %}
+
+        <table class="table table-stripped">
+            <thead>
+                <tr>
+                    <th>Titre</th>
+                    <th>Créée le</th>
+
+                </tr>
+            </thead>
+            <tbody>
+            {% for categorie in categories %}
+            <tr>
+                <td>{{ categorie.title }}</td>
+                <td>{{ categorie.created_at | date('d/m/Y')  }}</td>
+                <td>
+                    <a href="{{ path ('categorie.edit', {id: categorie.id}) }}" class="btn btn-secondary">Editer</a>
+                    <form method="post" action="{{ path ('categorie.delete', {id: categorie.id}) }}" style="display: inline-block" onsubmit="return confirm('Vous êtes en train de supprimer une catégorie, êtes vous sûr?')">
+                        <input type="hidden" name="_method" value="DELETE">
+                        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ categorie.id) }}">
+                        <button class="btn btn-danger">Supprimer</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+        <div class="text-right">
+            <a href="{{ path ('categorie.new') }}" class="btn btn-primary">Créer une nouvelle catégorie</a>
+        </div>
+        <div class="d-flex justify-content-end">
+            <a href="{{ path ('accueil') }}" class="btn btn-secondary">Retour</a>
+        </div>
+    </div>   
+{% endblock %}

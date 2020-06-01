@@ -25,8 +25,6 @@ class StagiaireController extends AbstractController
         $this->em = $em;
     }
     
-    
-    
     /**
      * @Route("/stagiaire", name="stagiaire.index")
      */
@@ -38,6 +36,28 @@ class StagiaireController extends AbstractController
         return $this->render('stagiaire/index.html.twig', compact('stagiaires'));
     }
     
+    /**
+     * @Route("/stagiaire/{slug}-{id}", name="stagiaire.show", requirements={"slug": "[a-z0-9\-]*"})
+     * @return Response
+     */
+    public function show(Stagiaire $stagiaire, string $slug): Response
+    {
+        if ($stagiaire->getSlug() !== $slug)
+        {
+            return $this ->redirectToRoute('stagiaire.show',
+            [
+                'id' => $stagiaire->getId(),
+                'slug' => $stagiaire->getSlug()
+            ],301);
+        }
+        return $this-> render('stagiaire/show.html.twig',
+            [
+                'stagiaire' => $stagiaire,
+                'current menu'=> 'stagiaires'
+            ]);
+
+    }
+
      /**
      * @Route("/stagiaire/create", name="stagiaire.new")
      */
@@ -63,21 +83,21 @@ class StagiaireController extends AbstractController
 
     /**
      * @Route("/stagiaire/edit/{id}", name="stagiaire.edit", methods="GET|POST")
-     * @param Stagiaire $property
+     * @param Stagiaire $stagiaire
      * @param Stagiaire $request
      */
     public function edit(Stagiaire $stagiaire, Request $request): Response
     {
         // $option = new Option();
-        // $property -> addOption($option);
+        // $stagiaire -> addOption($option);
         $form = $this->createForm(StagiaireType::class, $stagiaire);
         $form ->handleRequest($request);
 
         if($form->isSubmitted() && $form->isValid())
         {
-            // if($property->getImageFile() instanceof UploadedFile)
+            // if($stagiaire->getImageFile() instanceof UploadedFile)
             // {
-            //     $cacheManager->remove($helper->asset($property, 'imageFile'));
+            //     $cacheManager->remove($helper->asset($stagiaire, 'imageFile'));
             // }
             $this->em->flush();
             $this->addFlash('success', 'Stagiaire modifié avec succès');

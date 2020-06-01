@@ -1,0 +1,53 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Gérer les modules{% endblock %}
+
+{% block body %}
+    
+
+    <div class="container mt-4">
+
+        <h1>Gérer les modules</h1>
+
+        {% for message in app.flashes('success') %}
+            <div class="alert alert-success">
+                {{ message }}
+            </div>
+        {% endfor %}
+
+        <table class="table table-stripped">
+            <thead>
+                <tr>
+                    <th>Titre</th>
+                    <th>Catégorie</th>
+                    <th>Créé le</th>
+
+                </tr>
+            </thead>
+            <tbody>
+            {% for module in modules %}
+            <tr>
+                <td>{{ module.title }}</td>
+                <td>{{ module.categories.title }}</td>
+                <td>{{ module.created_at | date('d/m/Y')  }}</td>
+                <td>
+                    <a href="{{ path ('module.edit', {id: module.id}) }}" class="btn btn-secondary">Editer</a>
+                    <form method="post" action="{{ path ('module.delete', {id: module.id}) }}" style="display: inline-block" onsubmit="return confirm('Vous êtes en train de supprimer un module, êtes vous sûr?')">
+                        <input type="hidden" name="_method" value="DELETE">
+                        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ module.id) }}">
+                        <button class="btn btn-danger">Supprimer</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+        <div class="text-right">
+            <a href="{{ path ('module.new') }}" class="btn btn-primary">Créer un nouveau module</a>
+        </div>
+        <div class="d-flex justify-content-end">
+            <a href="{{ path ('accueil') }}" class="btn btn-secondary">Retour</a>
+        </div>
+    </div>   
+{% endblock %}
