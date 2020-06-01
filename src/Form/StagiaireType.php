@@ -3,12 +3,14 @@
 namespace App\Form;
 
 use App\Entity\Stagiaire;
+use App\Entity\Session;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 
 class StagiaireType extends AbstractType
 {
@@ -35,6 +37,13 @@ class StagiaireType extends AbstractType
             ->add('imageFile', FileType::class,
             [
                 'required' => false,
+            ])
+            ->add('sessions', EntityType::class,
+            [
+                'class' => Session::class ,
+                'required'=> false,
+                'choice_label' => 'title',
+                'multiple' => true
             ])
         ;
     }

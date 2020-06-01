@@ -30,6 +30,11 @@ class Module
     private $title;
 
     /**
+     * @ORM\ManyToOne(targetEntity=Categorie::class, inversedBy="modules")
+     */
+    private $categories;
+
+    /**
      * @ORM\Column(type="datetime")
      */
     private $created_at;
@@ -42,6 +47,7 @@ class Module
     public function __construct()
     {
         $this ->created_at = new \DateTime();
+        $this->belongs = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -93,4 +99,31 @@ class Module
         return $this;
     }
 
+    /**
+     * @return Collection|Belong[]
+     */
+    public function getBelongs(): Collection
+    {
+        return $this->belongs;
+    }
+
+    public function addBelong(Belong $belong): self
+    {
+        if (!$this->belongs->contains($belong)) {
+            $this->belongs[] = $belong;
+            $belong->addModule($this);
+        }
+
+        return $this;
+    }
+
+    public function removeBelong(Belong $belong): self
+    {
+        if ($this->belongs->contains($belong)) {
+            $this->belongs->removeElement($belong);
+            $belong->removeModule($this);
+        }
+
+        return $this;
+    }
 }

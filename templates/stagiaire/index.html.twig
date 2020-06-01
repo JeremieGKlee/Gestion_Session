@@ -40,7 +40,7 @@
                 </td>
                 <td>{{ stagiaire.lastname }}</td>
                 <td>{{ stagiaire.firstname }}</td>
-                <td>{% if stagiaire.actif == 1  %} oui {% endif %}</td>
+                <td>{% if stagiaire.sessions is not empty  %} oui {% endif %}</td>
                 <td>{{ stagiaire.created_at | date('d/m/Y')  }}</td>
                 <td>
                     <a href="{{ path('stagiaire.show', {id: stagiaire.id, slug: stagiaire.slug}) }}" class="btn btn-success">Consulter</a>

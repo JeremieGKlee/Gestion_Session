@@ -110,9 +110,15 @@ class Stagiaire
      */
     private $actif = false;
 
+    /**
+     * @ORM\ManyToMany(targetEntity=Session::class, inversedBy="stagiaires")
+     */
+    private $sessions;
+
     public function __construct()
     {
         $this ->created_at = new \DateTime();
+        $this->sessions = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -306,6 +312,32 @@ class Stagiaire
         }
 
         return $this;   
+    }
+
+    /**
+     * @return Collection|Session[]
+     */
+    public function getSessions(): Collection
+    {
+        return $this->sessions;
+    }
+
+    public function addSession(Session $session): self
+    {
+        if (!$this->sessions->contains($session)) {
+            $this->sessions[] = $session;
+        }
+
+        return $this;
+    }
+
+    public function removeSession(Session $session): self
+    {
+        if ($this->sessions->contains($session)) {
+            $this->sessions->removeElement($session);
+        }
+
+        return $this;
     }
 
 }
