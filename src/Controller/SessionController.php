@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Session;
+use App\Entity\Stagiaire;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Repository\SessionRepository;
@@ -92,6 +93,7 @@ class SessionController extends AbstractController
 
         if($form->isSubmitted() && $form->isValid())
         {
+                // dd($request);
             $this->em->flush();
             $this->addFlash('success', 'Session modifiée avec succès');
             return $this->redirectToRoute('session.index');

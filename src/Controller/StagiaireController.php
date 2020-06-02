@@ -88,17 +88,11 @@ class StagiaireController extends AbstractController
      */
     public function edit(Stagiaire $stagiaire, Request $request): Response
     {
-        // $option = new Option();
-        // $stagiaire -> addOption($option);
         $form = $this->createForm(StagiaireType::class, $stagiaire);
         $form ->handleRequest($request);
 
         if($form->isSubmitted() && $form->isValid())
         {
-            // if($stagiaire->getImageFile() instanceof UploadedFile)
-            // {
-            //     $cacheManager->remove($helper->asset($stagiaire, 'imageFile'));
-            // }
             $this->em->flush();
             $this->addFlash('success', 'Stagiaire modifié avec succès');
             return $this->redirectToRoute('stagiaire.index');

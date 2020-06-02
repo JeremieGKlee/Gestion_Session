@@ -65,7 +65,6 @@ class Session
     {
         $this ->created_at = new \DateTime();
         $this ->updated_at = new \DateTime();
-        
         $this->stagiaires = new ArrayCollection();
         $this->belongs = new ArrayCollection();
     }
