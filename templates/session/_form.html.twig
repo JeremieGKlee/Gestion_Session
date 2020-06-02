@@ -1,16 +1,15 @@
 {{ form_start(form) }}
-    <div class="row">
-        <div class="col-md-4">{{ form_row(session.title) }}</div>
-    </div>
-    <div class="row">
-        <div class="col-md-4">{{ form_row(session.datestart) }}</div>
-    </div>
-    <div class="row">
-        <div class="col-md-4">{{ form_row(session.dateend) }}</div>
-    </div>
-    <div class="row">
-        <div class="col-md-4">{{ form_row(session.spaceavailable) }}</div>
-    </div>
-    {{ form_rest(form) }}
-    <button class="btn btn-primary">{{ button|default('Enregistrer') }}</button>
-{{ form_end(form) }}
+        <div class="row">
+            <div class="col-md-12">{{ form_row(form.title) }}</div>
+        </div>
+        <div class="row">
+            <div class="col-md-4">{{ form_row(form.date_start) }}</div>
+            <div class="col-md-4">{{ form_row(form.date_end) }}</div>
+            <div class="col-md-4">{{ form_row(form.space_available) }}</div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">{{ form_row(form.stagiaires) }}</div>
+        </div>
+        {{ form_rest(form) }}
+        <button class="btn btn-primary">{{ button|default('Enregistrer') }}</button>
+        {{ form_end(form) }}

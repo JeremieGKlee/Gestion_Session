@@ -21,9 +21,9 @@
                     <th>Titre</th>
                     <th>Début</th>
                     <th>Fin</th>
-                    <th>places théo</th>
-                    <th>places rés.</th>
-                    <th>place rest.</th>
+                    <th>Places théo</th>
+                    <th>Places rés.</th>
+                    <th>Places rest.</th>
                     <th>Créé le</th>
                     <th>Actions</th>
                 </tr>
@@ -35,8 +35,8 @@
                 <td>{{ session.datestart | date('d/m/Y') }}</td>
                 <td>{{ session.dateend | date('d/m/Y') }}</td>
                 <td>{{ session.spaceavailable }}</td>
-                <td>{{ session.spaceavailable }}</td>
-                <td>{{ session.spaceavailable }}</td>
+                <td>{{ session.stagiaires | length }}</td>
+                <td>{{ session.spaceavailable - session.stagiaires | length }}</td>
                 <td>{{ session.created_at | date('d/m/Y')  }}</td>
                 <td>
                     <a href="{{ path('session.show', {id: session.id, slug: session.slug}) }}" class="btn btn-success">Consulter</a>

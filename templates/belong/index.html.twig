@@ -1,20 +1,53 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello BelongController!{% endblock %}
+{% block title %}Gérer les programmes{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
+    
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+    <div class="container mt-4">
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ 'C:/laragon/www/Gestion_Session/src/Controller/BelongController.php'|file_link(0) }}">src/Controller/BelongController.php</a></code></li>
-        <li>Your template at <code><a href="{{ 'C:/laragon/www/Gestion_Session/templates/belong/index.html.twig'|file_link(0) }}">templates/belong/index.html.twig</a></code></li>
-    </ul>
-</div>
+        <h1>Gérer les programmes</h1>
+
+        {% for message in app.flashes('success') %}
+            <div class="alert alert-success">
+                {{ message }}
+            </div>
+        {% endfor %}
+
+        <table class="table table-stripped">
+            <thead>
+                <tr>
+                    <th>Session</th>
+                    <th>Module</th>
+                    <th>Durée</th>
+
+                </tr>
+            </thead>
+            <tbody>
+            {% for belong in belongs %}
+            <tr>
+                <td>{{ belong.session.title }}</td>
+                <td>{{ belong.module.title }}</td>
+                <td>{{ belong.duration }}</td>
+                <td>
+                    <a href="{{ path ('belong.edit', {id: belong.id}) }}" class="btn btn-secondary">Editer</a>
+                    <form method="post" action="{{ path ('belong.delete', {id: belong.id}) }}" style="display: inline-block" onsubmit="return confirm('Vous êtes en train de supprimer un programme, êtes vous sûr?')">
+                        <input type="hidden" name="_method" value="DELETE">
+                        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ belong.id) }}">
+                        <button class="btn btn-danger">Supprimer</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+        <div class="text-right">
+            <a href="{{ path ('belong.new') }}" class="btn btn-primary">Créer une nouveau programme</a>
+        </div>
+        <div class="d-flex justify-content-end">
+            <a href="{{ path ('accueil') }}" class="btn btn-secondary">Retour</a>
+        </div>
+    </div>   
 {% endblock %}

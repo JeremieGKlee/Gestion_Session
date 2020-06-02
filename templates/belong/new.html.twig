@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Création d'un nouveau programme{% endblock %}
+
+{% block body %}
+    
+    <div class="container mt-4">
+        <h1>Créer un nouveau programme</h1>
+        {{ include ('belong/_form.html.twig', {button: 'Créer'}) }}
+        <div class="d-flex justify-content-end">
+            <a href="{{ path ('belong.index') }}" class="btn btn-secondary">Retour</a>
+        </div>
+    </div>
+
+{% endblock %}

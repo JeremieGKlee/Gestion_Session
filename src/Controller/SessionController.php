@@ -39,7 +39,7 @@ class SessionController extends AbstractController
      * @Route("/session/{slug}-{id}", name="session.show", requirements={"slug": "[a-z0-9\-]*"})
      * @return Response
      */
-    public function show(session $session, string $slug): Response
+    public function show(Session $session, string $slug): Response
     {
         if ($session->getSlug() !== $slug)
         {
@@ -62,8 +62,8 @@ class SessionController extends AbstractController
      */
     public function new(Request $request): Response
     {
-        $session = new session();
-        $form = $this->createForm(sessionType::class, $session);
+        $session = new Session();
+        $form = $this->createForm(SessionType::class, $session);
         $form ->handleRequest($request);
 
         if($form->isSubmitted() && $form->isValid())
@@ -82,22 +82,16 @@ class SessionController extends AbstractController
 
     /**
      * @Route("/session/edit/{id}", name="session.edit", methods="GET|POST")
-     * @param session $session
-     * @param session $request
+     * @param Session $session
+     * @param Session $request
      */
-    public function edit(session $session, Request $request): Response
+    public function edit(Session $session, Request $request): Response
     {
-        // $option = new Option();
-        // $session -> addOption($option);
-        $form = $this->createForm(sessionType::class, $session);
+        $form = $this->createForm(SessionType::class, $session);
         $form ->handleRequest($request);
 
         if($form->isSubmitted() && $form->isValid())
         {
-            // if($session->getImageFile() instanceof UploadedFile)
-            // {
-            //     $cacheManager->remove($helper->asset($session, 'imageFile'));
-            // }
             $this->em->flush();
             $this->addFlash('success', 'Session modifiée avec succès');
             return $this->redirectToRoute('session.index');

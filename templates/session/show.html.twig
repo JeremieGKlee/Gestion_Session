@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title stagiaire.lastname %}
+{% block title session.title %}
 
 {% block body %}
     <div class="jumbotron center">
@@ -12,43 +12,50 @@
             {% endfor %}
 
             <div class="row">
-                <div class="col-md-4">
-                <h1>Fiche Stagiaire</h1>
-                    {% if stagiaire.filename %}
-                    <img src="{{ vich_uploader_asset(stagiaire, 'imageFile') | imagine_filter('medium') }}" alt="card-img-top" style="width: 200px; height:200px;">
-                    {% else %}
-                    <img src="{{ '/images/stagiaires/avatarDoe.png' | imagine_filter('medium') }}" alt="card-img-top" style="width: 200px; height:200px;">
-                    {% endif %}
+                <div class="col-md-6">
+                <h1>Fiche Session :</h1>
+                <h2>{{ session.title }}</h2>
+                <h2>Comprends les modules : </h2>
+                {% for belong in session.belongs %}
+                <h3> - {{ belong.module.title }}, durée {{ belong.duration }} jours</h3>
+                {% endfor %}
                 </div>
                 <div class="col-md-6">
-                    <h2>{{ stagiaire.firstname }} {{ stagiaire.lastname }}</h2>
-                    <h3>Sexe : {{ stagiaire.sexeType }}</h3>
-                    <h3>Date de naissance : {{ stagiaire.born | date('d/m/Y') }}</h3>
-                    <h3>Ville : {{ stagiaire.town }}</h3>
-                    <h3>Courriel : {{ stagiaire.email }}</h3>
-                    <h3>Téléphone : {{ stagiaire.phone }}</h3>
+                    <h3>Date de début : {{ session.datestart | date('d/m/Y') }}</h3>
+                    <h3>Date de fin : {{ session.dateend | date('d/m/Y') }}</h3>
+                    <h3>Nombre de places théoriques : {{ session.spaceavailable }}</h3>
+                    <h3>Nombre de places réservées : {{ session.stagiaires | length }}</h3>
+                    <h3>Nombre de places restantes : {{ session.spaceavailable - session.stagiaires | length }}</h3>
                 </div>
             </div>
         </div>
     </div>
     <div class="container mt-4">
         <div class="row">
-            <div class="col-md-8">
-                <h2>Sessions prévues :</h2>
+            <div class="col-md-12">
+                <h2>Stagiaires inscrits :</h2>
                 <table class="table table-striped">
                     <thead>
                         <tr>
-                            <th>Titre</th>
-                            <th>Date de début</th>
-                            <th>Date de fin</th>
+                            <th>Nom</th>
+                            <th>Prénom</th>
+                            <th>Sexe</th>
+                            <th>Date de naissance</th>
+                            <th>Ville</th>
+                            <th>Courriel</th>
+                            <th>Téléphone</th>
                         </tr>
                     </thead>
                     <tbody>
-                        {% for session in stagiaire.sessions %}
+                        {% for stagiaire in session.stagiaires %}
                         <tr>
-                            <td>{{ session.title }}</td>
-                            <td>{{ session.datestart | date('d/m/Y') }}</td>
-                            <td>{{ session.dateend | date('d/m/Y') }}</td>
+                            <td>{{ stagiaire.lastname }}</td>
+                            <td>{{ stagiaire.firstname }}</td>
+                            <td>{{ stagiaire.sexeType }}</td>
+                            <td>{{ stagiaire.born | date('d/m/Y') }}</td>
+                            <td>{{ stagiaire.town }}</td>
+                            <td>{{ stagiaire.email }}</td>
+                            <td>{{ stagiaire.phone }}</td>
                         </tr>
                         {% endfor %}
                     </tbody>
@@ -57,6 +64,6 @@
         </div>
     </div>
     <div class="d-flex justify-content-end">
-        <a href="{{ path ('stagiaire.index') }}" class="btn btn-secondary">Retour</a>
+        <a href="{{ path ('session.index') }}" class="btn btn-secondary">Retour</a>
     </div>
 {% endblock %}

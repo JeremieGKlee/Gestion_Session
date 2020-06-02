@@ -5,6 +5,8 @@ namespace App\Form;
 use App\Entity\Session;
 
 use App\Entity\Stagiaire;
+use App\Entity\Belong;
+use App\Entity\Module;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -20,13 +22,13 @@ class SessionType extends AbstractType
             ->add('date_start', DateType::class,
             [
                 'years' => range(date('Y'),date('Y')+1),
-                'label' => 'Date de naissance',
+                'label' => 'Date de début',
                 'format' => 'ddMMMMyyyy',
             ])
             ->add('date_end', DateType::class,
             [
                 'years' => range(date('Y'),date('Y')+1),
-                'label' => 'Date de naissance',
+                'label' => 'Date de fin',
                 'format' => 'ddMMMMyyyy',
             ])
             ->add('space_available')
@@ -44,6 +46,7 @@ class SessionType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Session::class,
+            'translation_domain' => 'forms'
         ]);
     }
 }
