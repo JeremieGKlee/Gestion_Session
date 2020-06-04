@@ -25,7 +25,7 @@
                 </tr>
             </thead>
             <tbody>
-            {% for module in modules %}
+            {% for module in modules | sort((a, b) => a.title <=> b.title)%}
             <tr>
                 <td>{{ module.title }}</td>
                 <td>{{ module.categories.title }}</td>

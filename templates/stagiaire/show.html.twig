@@ -44,7 +44,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        {% for session in stagiaire.sessions %}
+                        {% for session in stagiaire.sessions | sort((a, b) => a.datestart <=> b.datestart) %}
                         <tr>
                             <td>{{ session.title }}</td>
                             <td>{{ session.datestart | date('d/m/Y') }}</td>

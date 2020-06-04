@@ -65,6 +65,20 @@ class SessionController extends AbstractController
     {
         $session = new Session();
         $form = $this->createForm(SessionType::class, $session);
+        if(isset($request->request->get("session")["stagiaires"]))
+        {
+            if(count($request->request->get("session")["stagiaires"])>$request->request->get("session")["space_available"])
+            {
+                $this->addFlash('error', 'vous avez inscrits trop de stagiaires, merci de faire un choix');
+                return $this->render('session/new.html.twig',
+                    [
+                    'session' => $session,
+                    'form' => $form->createView()
+                    ]);
+
+            }
+        }
+        
         $form ->handleRequest($request);
 
         if($form->isSubmitted() && $form->isValid())
@@ -81,6 +95,7 @@ class SessionController extends AbstractController
         ]);
     }
 
+    
     /**
      * @Route("/session/edit/{id}", name="session.edit", methods="GET|POST")
      * @param Session $session
@@ -89,22 +104,37 @@ class SessionController extends AbstractController
     public function edit(Session $session, Request $request): Response
     {
         $form = $this->createForm(SessionType::class, $session);
-        $form ->handleRequest($request);
-
+        if(isset($request->request->get("session")["stagiaires"]))
+        {
+            if(count($request->request->get("session")["stagiaires"])>$request->request->get("session")["space_available"])
+            {
+                $this->addFlash('error', 'vous avez inscrits trop de stagiaires, merci de faire un choix');
+                return $this->render('session/edit.html.twig',
+                    [
+                    'session' => $session,
+                    'form' => $form->createView()
+                    ]);
+            }
+        }
+        
+        $form->handleRequest($request);
         if($form->isSubmitted() && $form->isValid())
         {
-                // dd($request);
-            $this->em->flush();
-            $this->addFlash('success', 'Session modifiée avec succès');
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($session);
+            $stagiare = $em->flush();  
+            $this->addFlash('success', 'session ajouté avec succés');
             return $this->redirectToRoute('session.index');
+            
         }
-
         return $this->render('session/edit.html.twig',
-        [
-            'session' => $session,
-            'form' => $form->createView()
-        ]);
+            [
+             'session' => $session,
+             'form' => $form->createView()
+            ]);
+
     }
+
 
     /**
      * @Route("/session/delete/{id}", name="session.delete", methods="DELETE")

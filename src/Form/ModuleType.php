@@ -8,6 +8,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Doctrine\ORM\EntityRepository;
 
 class ModuleType extends AbstractType
 {
@@ -19,7 +20,12 @@ class ModuleType extends AbstractType
             [
                 'class' => Categorie::class ,
                 'choice_label' => 'title',
-                'multiple' => false
+                'multiple' => false,
+                'query_builder' => function (EntityRepository $er) 
+                {
+                    return $er->createQueryBuilder('c')
+                        ->orderBy('c.title', 'ASC');
+                },
             ])
         ;
     }

@@ -29,7 +29,7 @@
                 </tr>
             </thead>
             <tbody>
-            {% for stagiaire in stagiaires %}
+            {% for stagiaire in stagiaires | sort((a, b) => a.lastname <=> b.lastname) %}
             <tr>
                 <td>
                     {% if stagiaire.filename %}

@@ -16,7 +16,7 @@
                 <h1>Fiche Session :</h1>
                 <h2>{{ session.title }}</h2>
                 <h2>Comprends les modules : </h2>
-                {% for belong in session.belongs %}
+                {% for belong in session.belongs | sort((a, b) => a.module.title <=> b.module.title)%}
                 <h3> - {{ belong.module.title }}, durée {{ belong.duration }} jours</h3>
                 {% endfor %}
                 </div>
@@ -47,7 +47,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        {% for stagiaire in session.stagiaires %}
+                        {% for stagiaire in session.stagiaires | sort((a, b) => a.lastname <=> b.lastname) %}
                         <tr>
                             <td>{{ stagiaire.lastname }}</td>
                             <td>{{ stagiaire.firstname }}</td>

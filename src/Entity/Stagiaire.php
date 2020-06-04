@@ -52,6 +52,7 @@ class Stagiaire
     /**
      * @ORM\Column(type="string", length=255)
      * @assert\NotBlank()
+     * @ORM\OrderBy({"order" = "DESC", "lastname" = "DESC"})
      */
     private $lastname;
 

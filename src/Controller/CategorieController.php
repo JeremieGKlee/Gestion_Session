@@ -64,17 +64,11 @@ class CategorieController extends AbstractController
      */
     public function edit(categorie $categorie, Request $request): Response
     {
-        // $option = new Option();
-        // $property -> addOption($option);
         $form = $this->createForm(CategorieType::class, $categorie);
         $form ->handleRequest($request);
 
         if($form->isSubmitted() && $form->isValid())
         {
-            // if($property->getImageFile() instanceof UploadedFile)
-            // {
-            //     $cacheManager->remove($helper->asset($property, 'imageFile'));
-            // }
             $this->em->flush();
             $this->addFlash('success', 'Catégorie modifiée avec succès');
             return $this->redirectToRoute('categorie.index');

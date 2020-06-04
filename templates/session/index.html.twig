@@ -34,7 +34,7 @@
                 </tr>
             </thead>
             <tbody>
-            {% for session in sessions %}
+            {% for session in sessions | sort((a, b) => a.datestart <=> b.datestart)%}
             <tr>
                 <td>{{ session.title }}</td>
                 <td>{{ session.datestart | date('d/m/Y') }}</td>

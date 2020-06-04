@@ -11,6 +11,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Doctrine\ORM\EntityRepository;
 
 class StagiaireType extends AbstractType
 {
@@ -42,8 +43,30 @@ class StagiaireType extends AbstractType
             [
                 'class' => Session::class ,
                 'required'=> false,
-                'choice_label' => 'title',
-                'multiple' => true
+                'choice_label' => function($info)
+                {
+                    if(!$info->getIsFull())
+                    {
+                        return $info->getTitle() . " ( " . $info->getDateStart()->format('d/m/Y'). " - " . $info->getDateEnd()->format('d/m/Y'). " ) " .
+                       " ( Reste " . $info->getReste(). " places ) ";
+                       
+                    }
+                    else 
+                    {
+                        return $info == null;
+                    }
+                },
+                // {
+                //     return $info->getTitle() . " ( " . $info->getDateStart()->format('d/m/Y'). " - " . $info->getDateEnd()->format('d/m/Y'). " ) " .
+                //      " ( Reste " . $info->getReste(). " places ) ";
+                // },
+                'multiple' => true,
+                'expanded' =>true,
+                'query_builder' => function (EntityRepository $er) 
+                {
+                    return $er->createQueryBuilder('s')
+                        ->orderBy('s.title', 'ASC');
+                },
             ])
         ;
     }

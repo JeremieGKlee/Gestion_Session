@@ -217,4 +217,19 @@ class Session
 
         return $this;
     }
+
+    public function getIsFull()
+    {
+         if (count($this->getStagiaires()) >= $this->getSpaceAvailable())
+         {
+            return true;
+         }
+    }
+
+    public function getReste()
+    {
+        $result = $this->getSpaceAvailable() - count($this->getStagiaires());
+        return $result;
+    }
+   
 }

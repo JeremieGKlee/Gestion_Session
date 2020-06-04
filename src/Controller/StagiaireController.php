@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Stagiaire;
+use App\Entity\Session;
 use DateTime;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use App\Repository\StagiaireRepository;
@@ -89,6 +90,25 @@ class StagiaireController extends AbstractController
     public function edit(Stagiaire $stagiaire, Request $request): Response
     {
         $form = $this->createForm(StagiaireType::class, $stagiaire);
+        
+        $session = $this->getDoctrine()->getRepository(Session::class);
+        if(isset($request->request->get("stagiaire")["sessions"]))
+        {
+            foreach ($request->request->get("stagiaire")["sessions"]as $key)
+            {
+                if($key->$session->getIsFull())
+                {
+                    $this->addFlash('error', 'Désolé la session de formation est complète');
+                    return $this->render('stagiaire/edit.html.twig',
+                    [
+                        'stagiaire' => $stagiaire,
+                        'form' => $form->createView()
+                    ]);
+                }
+            }
+    }
+
+
         $form ->handleRequest($request);
 
         if($form->isSubmitted() && $form->isValid())

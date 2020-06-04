@@ -6,6 +6,16 @@
     
     <div class="container mt-4">
         <h1>Créer un nouveau module</h1>
+        {% for message in app.flashes('success') %}
+            <div class="alert alert-success">
+                {{ message }}
+            </div>
+        {% endfor %}
+        {% for message in app.flashes('error') %}
+            <div class="alert alert-danger">
+                {{ message }}
+            </div>
+        {% endfor %}
         {{ include ('module/_form.html.twig', {button: 'Créer'}) }}
         <div class="d-flex justify-content-end">
             <a href="{{ path ('module.index') }}" class="btn btn-secondary">Retour</a>
