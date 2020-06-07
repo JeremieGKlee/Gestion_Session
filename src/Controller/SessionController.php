@@ -69,7 +69,7 @@ class SessionController extends AbstractController
         {
             if(count($request->request->get("session")["stagiaires"])>$request->request->get("session")["space_available"])
             {
-                $this->addFlash('error', 'vous avez inscrits trop de stagiaires, merci de faire un choix');
+                $this->addFlash('error', 'Vous avez inscrits trop de stagiaires, merci de faire un choix');
                 return $this->render('session/new.html.twig',
                     [
                     'session' => $session,

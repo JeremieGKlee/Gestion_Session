@@ -231,5 +231,12 @@ class Session
         $result = $this->getSpaceAvailable() - count($this->getStagiaires());
         return $result;
     }
-   
+
+    public function __tostring()
+    {
+        $result = $this->getSpaceAvailable() - count($this->getStagiaires());
+        return $this->title." ( Du ".$this->date_start->format('d/m/Y')." au ".$this->date_end->format('d/m/Y')." reste : ".$result." places ) ";
+        
+    }
+
 }

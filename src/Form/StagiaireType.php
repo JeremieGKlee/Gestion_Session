@@ -43,23 +43,20 @@ class StagiaireType extends AbstractType
             [
                 'class' => Session::class ,
                 'required'=> false,
-                'choice_label' => function($info)
-                {
-                    if(!$info->getIsFull())
-                    {
-                        return $info->getTitle() . " ( " . $info->getDateStart()->format('d/m/Y'). " - " . $info->getDateEnd()->format('d/m/Y'). " ) " .
-                       " ( Reste " . $info->getReste(). " places ) ";
-                       
-                    }
-                    else 
-                    {
-                        return $info == null;
-                    }
-                },
+                // 'choice_label' => function($info)
                 // {
-                //     return $info->getTitle() . " ( " . $info->getDateStart()->format('d/m/Y'). " - " . $info->getDateEnd()->format('d/m/Y'). " ) " .
-                //      " ( Reste " . $info->getReste(). " places ) ";
+                //     if(!$info->getIsFull())
+                //     {
+                //         return $info->getTitle() . " ( " . $info->getDateStart()->format('d/m/Y'). " - " . $info->getDateEnd()->format('d/m/Y'). " ) " .
+                //        " ( Reste " . $info->getReste(). " places ) ";
+                       
+                //     }
+                //     else 
+                //     {
+                //         return $info == null;
+                //     }
                 // },
+                'choices' => $options['sessions_dispo'],
                 'multiple' => true,
                 'expanded' =>true,
                 'query_builder' => function (EntityRepository $er) 
@@ -73,9 +70,11 @@ class StagiaireType extends AbstractType
 
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults([
+        $resolver->setDefaults(
+        [
             'data_class' => Stagiaire::class,
-            'translation_domain' => 'forms'
+            'translation_domain' => 'forms',
+            'sessions_dispo' => null
         ]);
     }
 

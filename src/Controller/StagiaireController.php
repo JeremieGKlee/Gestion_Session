@@ -70,8 +70,26 @@ class StagiaireController extends AbstractController
 
         if($form->isSubmitted() && $form->isValid())
         {
+            $error = 0;
+            foreach($stagiaire->getSessions() as $session)
+            {
+                if($session->getIsFull())
+                {
+                    $this->addFlash('error', 'Désolé la session de formation est complète');
+                    $error++;
+                    return $this->render('stagiaire/edit.html.twig',
+                    [
+                        'stagiaire' => $stagiaire,
+                        'form' => $form->createView()
+                    ]);
+                }
+            }
+            if($error==0)
+            {
             $this->em->persist($stagiaire);
             $this->em->flush();
+            }
+            
             $this->addFlash('success', 'Stagiaire créé avec succès');
             return $this->redirectToRoute('stagiaire.index');
         }
@@ -89,16 +107,28 @@ class StagiaireController extends AbstractController
      */
     public function edit(Stagiaire $stagiaire, Request $request): Response
     {
-        $form = $this->createForm(StagiaireType::class, $stagiaire);
-        
-        $session = $this->getDoctrine()->getRepository(Session::class);
-        if(isset($request->request->get("stagiaire")["sessions"]))
+        $sessions = $this->em->getRepository(Session::class)->findAll();
+        $sessions_dispo =array_filter($sessions, function($session) use($stagiaire)
         {
-            foreach ($request->request->get("stagiaire")["sessions"]as $key)
+            return !$session->getIsFull() || $stagiaire->getSessions()->contains($session);
+        });
+        
+        
+        $form = $this->createForm(StagiaireType::class, $stagiaire,
+    [
+        'sessions_dispo' => $sessions_dispo
+    ]);
+        $form ->handleRequest($request);
+
+        if($form->isSubmitted() && $form->isValid())
+        {
+            $error = 0;
+            foreach($stagiaire->getSessions() as $session)
             {
-                if($key->$session->getIsFull())
+                if($session->getIsFull())
                 {
                     $this->addFlash('error', 'Désolé la session de formation est complète');
+                    $error++;
                     return $this->render('stagiaire/edit.html.twig',
                     [
                         'stagiaire' => $stagiaire,
@@ -106,14 +136,10 @@ class StagiaireController extends AbstractController
                     ]);
                 }
             }
-    }
-
-
-        $form ->handleRequest($request);
-
-        if($form->isSubmitted() && $form->isValid())
-        {
-            $this->em->flush();
+            if($error==0)
+            {
+                $this->em->flush();
+            }
             $this->addFlash('success', 'Stagiaire modifié avec succès');
             return $this->redirectToRoute('stagiaire.index');
         }
