@@ -77,21 +77,15 @@ class StagiaireController extends AbstractController
                 {
                     $this->addFlash('error', 'Désolé la session de formation est complète');
                     $error++;
-                    return $this->render('stagiaire/edit.html.twig',
-                    [
-                        'stagiaire' => $stagiaire,
-                        'form' => $form->createView()
-                    ]);
                 }
             }
             if($error==0)
             {
             $this->em->persist($stagiaire);
             $this->em->flush();
-            }
-            
             $this->addFlash('success', 'Stagiaire créé avec succès');
             return $this->redirectToRoute('stagiaire.index');
+            }
         }
         return $this->render('stagiaire/new.html.twig',
         [
@@ -112,8 +106,6 @@ class StagiaireController extends AbstractController
         {
             return !$session->getIsFull() || $stagiaire->getSessions()->contains($session);
         });
-        
-        
         $form = $this->createForm(StagiaireType::class, $stagiaire,
     [
         'sessions_dispo' => $sessions_dispo
@@ -125,25 +117,19 @@ class StagiaireController extends AbstractController
             $error = 0;
             foreach($stagiaire->getSessions() as $session)
             {
-                if($session->getIsFull())
+                if($session->getIsFull() && !$stagiaire->getSessions()->contains($session))
                 {
                     $this->addFlash('error', 'Désolé la session de formation est complète');
                     $error++;
-                    return $this->render('stagiaire/edit.html.twig',
-                    [
-                        'stagiaire' => $stagiaire,
-                        'form' => $form->createView()
-                    ]);
                 }
             }
             if($error==0)
             {
                 $this->em->flush();
+                $this->addFlash('success', 'Stagiaire modifié avec succès');
+                return $this->redirectToRoute('stagiaire.index');
             }
-            $this->addFlash('success', 'Stagiaire modifié avec succès');
-            return $this->redirectToRoute('stagiaire.index');
         }
-
         return $this->render('stagiaire/edit.html.twig',
         [
             'stagiaire' => $stagiaire,
