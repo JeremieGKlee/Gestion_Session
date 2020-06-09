@@ -82,7 +82,7 @@ CREATE TABLE IF NOT EXISTS `module` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `title` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` datetime NOT NULL,
-  `categories_id` int(11) NOT NULL,
+  `categories_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `IDX_C242628A21214B7` (`categories_id`),
   CONSTRAINT `FK_C242628A21214B7` FOREIGN KEY (`categories_id`) REFERENCES `categorie` (`id`)
@@ -112,18 +112,19 @@ CREATE TABLE IF NOT EXISTS `session` (
   `created_at` datetime NOT NULL,
   `updated_at` datetime NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Listage des données de la table gestion_session.session : ~7 rows (environ)
+-- Listage des données de la table gestion_session.session : ~8 rows (environ)
 /*!40000 ALTER TABLE `session` DISABLE KEYS */;
 INSERT INTO `session` (`id`, `title`, `date_start`, `date_end`, `space_available`, `created_at`, `updated_at`) VALUES
-	(1, 'Initiation Comptabilité', '2020-06-10 00:00:00', '2020-07-20 00:00:00', 8, '2020-06-01 12:42:37', '2020-06-01 14:42:41'),
-	(4, 'Initiation infographie (PS, INDD, AI)', '2020-06-01 00:00:00', '2020-07-01 00:00:00', 10, '2020-06-02 02:49:46', '2020-06-02 02:49:46'),
-	(5, 'Initiation à Word et Excel', '2020-06-01 00:00:00', '2020-06-29 00:00:00', 8, '2020-06-02 02:51:19', '2020-06-02 02:51:19'),
+	(1, 'Initiation Comptabilité', '2020-06-04 00:00:00', '2020-06-04 00:00:00', 8, '2020-06-01 12:42:37', '2020-06-01 14:42:41'),
+	(4, 'Initiation infographie (PS, INDD, AI)', '2020-06-07 00:00:00', '2020-06-07 00:00:00', 4, '2020-06-02 02:49:46', '2020-06-02 02:49:46'),
+	(5, 'Initiation à Word et Excel', '2020-06-04 00:00:00', '2020-06-04 00:00:00', 8, '2020-06-02 02:51:19', '2020-06-02 02:51:19'),
 	(6, 'Perfectionnement Word Excel et Powerpoint', '2020-07-08 00:00:00', '2020-07-12 00:00:00', 6, '2020-06-02 02:57:32', '2020-06-02 02:57:32'),
 	(7, 'Initiation Bureautique et infographie', '2020-07-12 00:00:00', '2020-08-07 00:00:00', 10, '2020-06-02 02:58:29', '2020-06-02 02:58:29'),
 	(8, 'Initiation en PHP / SQL', '2020-09-01 00:00:00', '2020-12-12 00:00:00', 12, '2020-06-02 02:59:15', '2020-06-02 02:59:15'),
-	(9, 'Test', '2020-08-01 00:00:00', '2020-11-01 00:00:00', 2, '2020-06-02 14:21:24', '2020-06-02 14:21:24');
+	(9, 'Test', '2020-06-04 00:00:00', '2020-06-04 00:00:00', 2, '2020-06-02 14:21:24', '2020-06-02 14:21:24'),
+	(12, 'Initiation infographie (PS, INDD, AI)', '2020-06-04 00:00:00', '2020-06-04 00:00:00', 2, '2020-06-03 22:58:59', '2020-06-03 22:58:59');
 /*!40000 ALTER TABLE `session` ENABLE KEYS */;
 
 -- Listage de la structure de la table gestion_session. stagiaire
@@ -141,12 +142,12 @@ CREATE TABLE IF NOT EXISTS `stagiaire` (
   `actif` tinyint(1) NOT NULL DEFAULT '0',
   `filename` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=112 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=113 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Listage des données de la table gestion_session.stagiaire : ~50 rows (environ)
+-- Listage des données de la table gestion_session.stagiaire : ~52 rows (environ)
 /*!40000 ALTER TABLE `stagiaire` DISABLE KEYS */;
 INSERT INTO `stagiaire` (`id`, `lastname`, `firstname`, `sexe`, `born`, `town`, `email`, `phone`, `created_at`, `updated_at`, `actif`, `filename`) VALUES
-	(58, 'GOSGNACK', 'Dani-Lee', 1, '2008-08-15 00:00:00', 'Riou', 'ninjadadar@gmail.com', '0607060706', '2020-05-29 12:25:17', '2020-05-30 16:32:14', 1, '5ed28a8f370ab208691435.jpg'),
+	(58, 'Gosgnack', 'Dani-Lee', 1, '2008-08-15 00:00:00', 'Riou', 'ninjadadar@gmail.com', '0607060706', '2020-05-29 12:25:17', '2020-05-30 16:32:14', 1, '5ed28a8f370ab208691435.jpg'),
 	(59, 'Verdier', 'Corinne', 2, '2020-06-06 00:00:00', 'Chauvet-la-Forêt', 'ninjadaz@gmail.com', '0607060706', '2020-05-29 12:25:17', '2020-05-30 16:33:00', 1, '5ed28abd8c7a8111088260.jpg'),
 	(60, 'Aubert', 'Alice', 1, '2007-11-20 00:00:00', 'Fleury', 'paris.alfred@ifrance.com', '0607060706', '2020-05-29 12:25:17', '2020-05-30 16:40:28', 1, '5ed28c7cab627153501330.jpg'),
 	(63, 'Torres', 'Maurice', 3, '2005-08-15 00:00:00', 'Gonzalezboeuf', 'auguste.bazin@tiscali.fr', '0607060706', '2020-05-29 12:25:17', '2020-05-31 00:05:53', 0, '5ed2f4e26e4d2878202832.jpg'),
@@ -154,13 +155,13 @@ INSERT INTO `stagiaire` (`id`, `lastname`, `firstname`, `sexe`, `born`, `town`, 
 	(65, 'Teixeira', 'Sylvie', 3, '1959-04-01 00:00:00', 'Lecomte', 'yjacques@laposte.net', '0607060706', '2020-05-29 12:25:17', '2020-05-29 12:25:17', 0, ''),
 	(66, 'Louis', 'Gérard', 1, '1959-08-26 00:00:00', 'Bonneaudan', 'amelie42@bouygtel.fr', '0607060706', '2020-05-29 12:25:17', '2020-05-29 12:25:17', 0, ''),
 	(67, 'Baudry', 'Catherine', 3, '2006-10-14 00:00:00', 'Camus', 'constance.berthelot@free.fr', '0607060706', '2020-05-29 12:25:17', '2020-05-29 12:25:17', 0, ''),
-	(68, 'Tessier', 'Yves', 2, '1941-03-12 02:59:23', 'Marion', 'roy.martin@orange.fr', '0607060706', '2020-05-29 12:25:17', '2020-05-29 12:25:17', 0, ''),
+	(68, 'Tessier', 'Yves', 2, '2020-03-12 00:00:00', 'Marion', 'roy.martin@orange.fr', '0607060706', '2020-05-29 12:25:17', '2020-05-29 12:25:17', 0, ''),
 	(69, 'Dufour', 'Margot', 3, '2020-10-10 00:00:00', 'Lacombe', 'augustin.alexandre@ifrance.com', '0607060706', '2020-05-29 12:25:17', '2020-05-29 12:25:17', 0, ''),
 	(70, 'Launay', 'Alphonse', 2, '1927-10-13 22:37:32', 'Duhamelboeuf', 'nathalie.joly@free.fr', '0607060706', '2020-05-29 12:25:17', '2020-05-29 12:25:17', 0, ''),
-	(71, 'Blanchard', 'Gilbert', 1, '1940-08-29 15:40:12', 'CordierVille', 'juliette84@ifrance.com', '0607060706', '2020-05-29 12:25:17', '2020-05-29 12:25:17', 0, ''),
+	(71, 'Blanchard', 'Gilbert', 1, '2020-08-29 00:00:00', 'CordierVille', 'juliette84@ifrance.com', '0607060706', '2020-05-29 12:25:17', '2020-05-29 12:25:17', 0, ''),
 	(72, 'Raymond', 'Tristan', 3, '1978-11-01 00:00:00', 'Marchand-sur-Mer', 'ubarthelemy@gmail.com', '0607060706', '2020-05-29 12:25:17', '2020-05-29 12:25:17', 0, ''),
 	(73, 'Charrier', 'Dorothée', 2, '1971-07-27 14:36:41', 'Bonneau', 'rene03@live.com', '0607060706', '2020-05-29 12:25:17', '2020-05-29 12:25:17', 0, ''),
-	(74, 'Berthelot', 'Denise', 1, '1921-01-16 09:09:46', 'Thierry', 'valentine.guilbert@club-internet.fr', '0607060706', '2020-05-29 12:25:17', '2020-05-29 12:25:17', 0, ''),
+	(74, 'Berthelot', 'Denise', 1, '2020-01-16 00:00:00', 'Thierry', 'valentine.guilbert@club-internet.fr', '0607060706', '2020-05-29 12:25:17', '2020-05-29 12:25:17', 0, ''),
 	(75, 'Bonnin', 'Noémi', 1, '2007-07-20 00:00:00', 'Mallet-les-Bains', 'dantoine@sfr.fr', '0607060706', '2020-05-29 12:25:17', '2020-05-29 12:25:17', 0, ''),
 	(76, 'Bazin', 'Valérie', 3, '2013-06-19 00:00:00', 'Georges', 'perez.benjamin@free.fr', '0607060706', '2020-05-29 12:25:17', '2020-05-29 12:25:17', 0, ''),
 	(77, 'Breton', 'Geneviève', 2, '1943-12-17 06:51:52', 'Aubry', 'masse.benoit@ifrance.com', '0607060706', '2020-05-29 12:25:17', '2020-05-29 12:25:17', 0, ''),
@@ -177,8 +178,8 @@ INSERT INTO `stagiaire` (`id`, `lastname`, `firstname`, `sexe`, `born`, `town`, 
 	(88, 'Poirier', 'Marc', 1, '1956-08-01 20:12:40', 'Delmasboeuf', 'zacharie.rey@hotmail.fr', '0607060706', '2020-05-29 12:25:17', '2020-05-29 12:25:17', 0, ''),
 	(89, 'Nguyen', 'Valentine', 1, '1959-01-14 19:38:19', 'Laurentboeuf', 'hdelmas@voila.fr', '0607060706', '2020-05-29 12:25:17', '2020-05-29 12:25:17', 0, ''),
 	(90, 'Teixeira', 'Marc', 2, '1993-06-15 08:21:02', 'Philippe-la-Forêt', 'alphonse71@gmail.com', '0607060706', '2020-05-29 12:25:17', '2020-05-29 12:25:17', 0, ''),
-	(91, 'Alexandre', 'Paul', 1, '2007-06-06 13:04:37', 'Chretien', 'philippe.riviere@club-internet.fr', '0607060706', '2020-05-29 12:25:17', '2020-05-29 12:25:17', 0, ''),
-	(92, 'Bonnet', 'Roger', 3, '1924-01-16 08:20:47', 'Carrenec', 'bourdon.georges@dbmail.com', '0607060706', '2020-05-29 12:25:17', '2020-05-29 12:25:17', 0, ''),
+	(91, 'Alexandre', 'Paul', 1, '2007-06-06 00:00:00', 'Chretien', 'philippe.riviere@club-internet.fr', '0607060706', '2020-05-29 12:25:17', '2020-05-29 12:25:17', 0, ''),
+	(92, 'Bonnet', 'Rogerer', 3, '2020-01-16 00:00:00', 'Carrenec', 'bourdon.georges@dbmail.com', '0607060706', '2020-05-29 12:25:17', '2020-05-29 12:25:17', 0, ''),
 	(93, 'Dupre', 'Arnaude', 1, '1944-07-07 19:43:59', 'Robert', 'merle.laetitia@free.fr', '0607060706', '2020-05-29 12:25:17', '2020-05-29 12:25:17', 0, ''),
 	(94, 'Tanguy', 'Constance', 1, '1978-08-07 03:40:45', 'Vasseur-sur-Hardy', 'faure.marine@hotmail.fr', '0607060706', '2020-05-29 12:25:17', '2020-05-29 12:25:17', 0, ''),
 	(95, 'Thibault', 'Valérie', 1, '1968-12-28 07:06:04', 'Masson', 'idijoux@club-internet.fr', '0607060706', '2020-05-29 12:25:17', '2020-05-29 12:25:17', 0, ''),
@@ -193,9 +194,11 @@ INSERT INTO `stagiaire` (`id`, `lastname`, `firstname`, `sexe`, `born`, `town`, 
 	(104, 'Remy', 'Raymond', 2, '1970-04-19 01:15:13', 'Lenoir-les-Bains', 'daniel.alexandre@ifrance.com', '0607060706', '2020-05-29 12:25:17', '2020-05-29 12:25:17', 0, ''),
 	(105, 'Garnier', 'Lucy', 1, '1944-05-09 01:16:18', 'Schneider', 'oreynaud@live.com', '0607060706', '2020-05-29 12:25:17', '2020-05-29 12:25:17', 0, ''),
 	(106, 'Lemaire', 'Honoré', 2, '1989-03-16 15:27:29', 'Henry-sur-Picard', 'uparent@noos.fr', '0607060706', '2020-05-29 12:25:17', '2020-05-29 12:25:17', 0, ''),
-	(107, 'GOSGNACK', 'Jérémie', 1, '1975-03-16 00:00:00', 'KEMBS', 'jeremie@gmail.com', '0607060706', '2020-05-29 12:32:50', '2020-05-29 12:32:50', 0, ''),
+	(107, 'Gosgnack', 'Jérémie', 1, '1975-03-16 00:00:00', 'KEMBS', 'jeremie@gmail.com', '0607060706', '2020-05-29 12:32:50', '2020-05-29 12:32:50', 0, ''),
 	(108, 'Térieur', 'Alain', 3, '1987-01-01 00:00:00', 'STRASBOURG', 'azeerty@gmail.com', '0612341223', '2020-05-29 17:23:25', '2020-05-29 17:23:25', 1, ''),
-	(110, 'MAN', 'Iron', 3, '1985-01-01 00:00:00', 'STRASBOURG', 'dzedzedz@gamil.Com', '0612341223', '2020-05-31 00:34:03', '2020-05-31 00:34:03', 1, '5ed2fb7c555f9754647076.jpg');
+	(110, 'MAN', 'Iron', 3, '1985-01-01 00:00:00', 'STRASBOURG', 'dzedzedz@gamil.Com', '0612341223', '2020-05-31 00:34:03', '2020-05-31 00:34:03', 1, '5ed2fb7c555f9754647076.jpg'),
+	(111, 'Gosgnack', 'Lucie-Lee', 2, '2005-05-27 00:00:00', 'kembs', 'lulusmiley27@gmail.com', '0621307920', '2020-06-03 19:34:06', '2020-06-03 19:34:07', 0, '5ed7fb3030aa7163225868.jpg'),
+	(112, 'Man', 'Iron', 1, '1968-01-01 00:00:00', 'STRASBOURG', 'dzedzeggrgerdz@gamil.Com', '0612341223', '2020-06-07 15:01:25', '2020-06-07 15:01:26', 0, '5edd01470d1be174120233.jpg');
 /*!40000 ALTER TABLE `stagiaire` ENABLE KEYS */;
 
 -- Listage de la structure de la table gestion_session. stagiaire_session
@@ -209,13 +212,29 @@ CREATE TABLE IF NOT EXISTS `stagiaire_session` (
   CONSTRAINT `FK_D32D02D4BBA93DD6` FOREIGN KEY (`stagiaire_id`) REFERENCES `stagiaire` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Listage des données de la table gestion_session.stagiaire_session : ~4 rows (environ)
+-- Listage des données de la table gestion_session.stagiaire_session : ~20 rows (environ)
 /*!40000 ALTER TABLE `stagiaire_session` DISABLE KEYS */;
 INSERT INTO `stagiaire_session` (`stagiaire_id`, `session_id`) VALUES
 	(58, 1),
-	(59, 1),
+	(58, 9),
+	(58, 12),
 	(60, 1),
-	(60, 4);
+	(60, 4),
+	(60, 12),
+	(66, 1),
+	(67, 1),
+	(67, 4),
+	(71, 1),
+	(74, 1),
+	(74, 4),
+	(75, 4),
+	(76, 1),
+	(76, 5),
+	(91, 5),
+	(91, 6),
+	(92, 1),
+	(111, 9),
+	(112, 8);
 /*!40000 ALTER TABLE `stagiaire_session` ENABLE KEYS */;
 
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
